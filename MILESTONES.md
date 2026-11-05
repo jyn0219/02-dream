@@ -1,6 +1,7 @@
 # 里程碑清单（M0–M6）
 
-**第 02 组 · dream · 文件夹 `02_dream` · B 轨任务包 B1。** 老师允许交网盘，不必用 GitHub。
+**第 02 组 · dream · 文件夹 `02_dream` · B 轨任务包 B1。**
+仓库：<https://github.com/jyn0219/02-dream>（Public）。老师允许交网盘，GitHub 是加分做法，两者都能用。
 
 按《项目工作室手册》第二节整理。每交一次，把状态改成 ✅ 并把 PDF 放进 `submissions/`。
 
