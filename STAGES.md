@@ -37,8 +37,8 @@
 - **能交**：`figures/` 全部图与表、`narrative/key_numbers.md`、代码与 README（作为复现包的一部分）。
 - **不能直接交**：`build/` 里的 PDF 都带〔 〕占位符，是排版预览；补完文字后重新导出，
   放到 `submissions/` 下再交。
-- **不要交**：`.venv/`（Python 虚拟环境，215 MB）、`.idea/`（PyCharm 配置）、`.mplcache/`、`__pycache__/`。
-  这些是本机环境，不是成果；压缩包已排除。
+- **不要交**：`.venv/`（如果本地建了虚拟环境）、`.idea/`（PyCharm 配置）、`.mplcache/`、`__pycache__/`。
+  这些是本机环境，不是成果；仓库和压缩包都已排除。
 
 ## 四、复现包目录（手册第四节）
 

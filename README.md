@@ -11,6 +11,22 @@
 每完成一个里程碑 push 一次，提交表单里填这个地址；助教按下面的三条命令即可从头运行。
 网盘可作为备份，但不是必需。`data/raw/` 里已带原始数据，不需要另外下载。
 
+## 快速开始（新电脑 / 教室电脑）
+
+Windows 上克隆仓库后，双击（或在命令行运行）一键脚本：
+
+```bat
+git clone https://github.com/jyn0219/02-dream.git
+cd 02-dream
+tools\setup_windows.bat
+```
+
+脚本会依次：显示当前解释器 → 按 `requirements.txt` 装依赖 → 运行环境自检。
+没有 Python 就先装 3.12（装到用户目录即可，不需要管理员权限）。
+
+克隆下来的目录名是 `02-dream`（连字符），本地文件夹叫 `02_dream`（下划线）也不影响——
+脚本和文档里全是相对路径，不依赖目录名。
+
 ## 怎样运行
 
 ```bash
@@ -25,10 +41,9 @@ python analysis/03_congestion.py data/raw/reference_stops.csv
 
 按 01 → 02 → 03 的顺序跑，不要跳。全程相对路径，换一台电脑也能跑。
 
-**关于 `.venv/`**：项目里有一个 PyCharm 建的虚拟环境（`.venv/`，Python 3.14、pandas 3.1.1、
-matplotlib 3.11.2），日常用它跑也可以，三个脚本的结果与 `shipping` 环境**逐字节一致**（已验证）。
-但课程要求的复现环境是 Python 3.12 的 `shipping`，交之前用 `conda activate shipping` 再跑一遍。
-`.venv/` 和 `.idea/` 不要上传、不进压缩包。
+**环境**：课程标准环境是 Python 3.12 的 conda 环境 `shipping`（`conda activate shipping`）。
+不确定依赖齐不齐，先跑 `python tools\check_env.py`：它打印每个包的版本，缺包时给出安装命令。
+本项目**不需要**虚拟环境；`.venv/`、`.idea/`、`build/` 都不进仓库。
 
 **预期结果**（默认参数 v0=0.5 节、tau=30 分钟、gap=10 分钟）：
 
@@ -47,7 +62,8 @@ matplotlib 3.11.2），日常用它跑也可以，三个脚本的结果与 `ship
 ├── STAGES.md              # 提交清单：每个文件属于哪个阶段（M0–M6）
 ├── MILESTONES.md          # M1–M6 交什么、现在到哪一步
 ├── SELFCHECK.md           # 提交前自检：复现包 / 报告 / AI / 路演
-├── requirements.txt
+├── requirements.txt       # pandas、numpy、matplotlib、python-docx、python-pptx
+├── .gitattributes         # 换行符规则（.bat 强制 CRLF）
 ├── data/
 │   ├── raw/               # 原始 AIS，只读
 │   └── clean/             # stops.csv，由 01 生成
@@ -59,6 +75,7 @@ matplotlib 3.11.2），日常用它跑也可以，三个脚本的结果与 `ship
 ├── figures/               # 图与两张敏感性表，全部由脚本生成
 ├── narrative/
 │   ├── report.md          # 终稿正文（骨架，〔 〕处由本人补写）
+│   ├── m1_proposal.md     # M1 选题书（两页）
 │   ├── key_numbers.md     # 03 自动生成的关键数字
 │   ├── data_log.md        # 分析决策日志（占总成绩 10%）
 │   ├── m3_checkin.md      # M3 当面检查的 8 分钟准备单
@@ -66,9 +83,11 @@ matplotlib 3.11.2），日常用它跑也可以，三个脚本的结果与 `ship
 │   ├── slides_outline.md  # M6 5 页路演大纲
 │   └── ai_disclosure.md   # AI 使用披露表
 ├── tools/
+│   ├── setup_windows.bat  # 一键装依赖 + 自检（新电脑先运行这个）
+│   ├── check_env.py       # 检查依赖是否齐全
 │   ├── build_report.py    # Markdown → Word → PDF
 │   └── build_slides.py    # 生成 M6 路演 PPTX（读 sensitivity.csv 与三张图）
-├── build/                 # 导出的 docx/pdf（不进版本库）
+├── build/                 # 导出的 docx/pdf/pptx（不进版本库）
 └── submissions/           # 各次提交的 PDF：m1_proposal.pdf、m2_eda.pdf、m4_draft.pdf、m6_final.pdf、m6_slides.pdf
 ```
 
@@ -77,7 +96,7 @@ matplotlib 3.11.2），日常用它跑也可以，三个脚本的结果与 `ship
 课程要求文档一律交 PDF。不要手动排版，用 `tools/build_report.py` 从 Markdown 生成：
 
 ```bash
-pip install python-docx          # 只需一次
+python tools\check_env.py        # 确认 python-docx 已装
 
 python tools/build_report.py narrative/m1_proposal.md
 python tools/build_report.py narrative/report.md
@@ -86,7 +105,8 @@ python tools/build_report.py narrative/report.md
 python tools/build_report.py narrative/m1_proposal.md --out submissions/m1_proposal.docx
 ```
 
-生成同名 `.docx` 与 `.pdf`。默认排版：A4、宋体小四、1.5 倍行距、首行缩进两字、
+生成同名 `.docx` 与 `.pdf`。PDF 转换用的是本机的 LibreOffice Kit；换到没有它的电脑时，
+加 `--no-pdf` 只生成 `.docx`，再用 Word 另存为 PDF。默认排版：A4、宋体小四、1.5 倍行距、首行缩进两字、
 标题黑体、表格带框线且表头跨页重复、图注小五居中、页脚页码。
 想微调（字号、页边距、单位名称）改脚本开头的常量，或直接改 `.docx` 后另存为 PDF。
 
