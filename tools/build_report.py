@@ -53,7 +53,7 @@ def set_font(run, east=BODY_EAST, ascii_=BODY_ASCII, size=None, bold=None):
 def body_para(doc, text="", indent=True, align=None, space_after=5):
     p = doc.add_paragraph()
     pf = p.paragraph_format
-    pf.line_spacing = 1.3
+    pf.line_spacing = 1.25
     pf.space_after = Pt(space_after)
     if indent:
         pf.first_line_indent = Pt(24)          # 首行缩进两字（12pt × 2）
@@ -113,7 +113,7 @@ def caption(doc, text):
     pf.space_before = Pt(3)
     pf.space_after = Pt(10)
     r = p.add_run(text)
-    set_font(r, size=9)
+    set_font(r, size=8.5)
     r.font.color.rgb = RGBColor(0x33, 0x33, 0x33)
 
 
@@ -132,7 +132,7 @@ def add_table(doc, rows):
         cell.text = ""
         p = cell.paragraphs[0]
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        add_inline(p, header[i], size=9)
+        add_inline(p, header[i], size=8.5)
         for r in p.runs:
             r.font.bold = True
     for row in body:
@@ -142,7 +142,7 @@ def add_table(doc, rows):
             p = cells[i].paragraphs[0]
             p.paragraph_format.line_spacing = 1.05
             p.paragraph_format.space_after = Pt(2)
-            add_inline(p, val, size=9)
+            add_inline(p, val, size=8.5)
     # 行不跨页断开
     for row in table.rows:
         tr_pr = row._tr.get_or_add_trPr()
@@ -155,7 +155,7 @@ def add_page_number(doc):
     footer = doc.sections[0].footer.paragraphs[0]
     footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
     run = footer.add_run("第 ")
-    set_font(run, size=9)
+    set_font(run, size=8.5)
     fld = OxmlElement("w:fldSimple")
     fld.set(qn("w:instr"), "PAGE")
     r = OxmlElement("w:r")
@@ -165,7 +165,7 @@ def add_page_number(doc):
     fld.append(r)
     footer._p.append(fld)
     run2 = footer.add_run(" 页")
-    set_font(run2, size=9)
+    set_font(run2, size=8.5)
 
 
 def split_table_row(line):
@@ -182,8 +182,8 @@ def build(md_path: Path, out_path: Path) -> Path:
     doc = Document()
     sec = doc.sections[0]
     sec.page_width, sec.page_height = Cm(21), Cm(29.7)
-    sec.top_margin = sec.bottom_margin = Cm(2.2)
-    sec.left_margin = sec.right_margin = Cm(2.4)
+    sec.top_margin = sec.bottom_margin = Cm(2.0)
+    sec.left_margin = sec.right_margin = Cm(2.2)
     add_page_number(doc)
 
     i, n = 0, len(lines)
@@ -235,7 +235,7 @@ def build(md_path: Path, out_path: Path) -> Path:
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER
             p.paragraph_format.keep_with_next = True
             if img.exists():
-                p.add_run().add_picture(str(img), width=Cm(9))
+                p.add_run().add_picture(str(img), width=Cm(10.5))
             else:
                 p.add_run(f"[缺图：{src}]")
             i += 1
@@ -258,18 +258,30 @@ def build(md_path: Path, out_path: Path) -> Path:
                 r.font.size = Pt(10.5)
             continue
 
-        if re.match(r"^[-*]\s+", s):                  # 无序列表
+        if re.match(r"^[-*]\s+", s):                  # 无序列表（含缩进续行）
+            text = re.sub(r"^[-*]\s+", "", s)
+            i += 1
+            while i < n and lines[i].strip() and not re.match(
+                r"^(#|\||>|```|!\[|[-*]\s|\d+\.\s)", lines[i].strip()
+            ):
+                text += lines[i].strip()
+                i += 1
             p = doc.add_paragraph(style="List Bullet")
             p.paragraph_format.line_spacing = 1.4
-            add_inline(p, re.sub(r"^[-*]\s+", "", s), size=11.5)
-            i += 1
+            add_inline(p, text, size=11.5)
             continue
 
-        if re.match(r"^\d+\.\s+", s):                 # 有序列表
+        if re.match(r"^\d+\.\s+", s):                 # 有序列表（含缩进续行）
+            text = re.sub(r"^\d+\.\s+", "", s)
+            i += 1
+            while i < n and lines[i].strip() and not re.match(
+                r"^(#|\||>|```|!\[|[-*]\s|\d+\.\s)", lines[i].strip()
+            ):
+                text += lines[i].strip()
+                i += 1
             p = doc.add_paragraph(style="List Number")
             p.paragraph_format.line_spacing = 1.4
-            add_inline(p, re.sub(r"^\d+\.\s+", "", s), size=11.5)
-            i += 1
+            add_inline(p, text, size=11.5)
             continue
 
         if re.fullmatch(r"-{3,}", s):
