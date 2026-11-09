@@ -42,7 +42,8 @@
 - [x] 终稿 `submissions/m6_final.pdf`、路演 `submissions/m6_slides.pdf` 已归档
 - [x] 对话记录导出 `submissions/ai_dialog.pdf`（50 轮）
 - [x] M5：决定放弃（个人作业 10 分不计；如改变主意，截止前仍可补交）
-- [ ] 数据日志全册、十项自检、路演排练
+- [x] 数据日志全册 `submissions/data_log.pdf`（3 页，15 条决策）
+- [ ] 十项自检、路演排练
 
 ## M5 评阅的固定要求
 
