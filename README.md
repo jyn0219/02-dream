@@ -4,7 +4,7 @@
 用哥德堡港 2017 年 7 月 5 日一天的 AIS 船位，识别油轮与货船的停留，估计停留时长的分布，
 给出一个拥堵指标，并说清它的口径与局限。
 
-数据：丹麦海事局（DMA）AIS 开放数据〔官〕，经 movingpandas-examples 整理为课程样本包；
+数据：丹麦海事局（DMA）AIS 开放数据（官），经 movingpandas-examples 整理为课程样本包；
 84,702 行、100 艘船、8 个字段。免费使用，须署名。
 
 **提交方式**：代码与文档在 GitHub —— <https://github.com/jyn0219/02-dream>（Public，未登录可浏览）。
@@ -54,6 +54,15 @@ python analysis/03_congestion.py data/raw/reference_stops.csv
 
 对不上就先查 01 的第 1–4 步，不要往下做。
 
+## 数据从哪里来
+
+| 文件 | 来源 | 性质 | 下载日期 |
+|---|---|---|---|
+| `data/raw/ais_gothenburg_20170705.csv` | 丹麦海事局（DMA）AIS 开放数据，经 movingpandas-examples 整理为课程样本包 | 官 | 2026-10-29 |
+| `data/raw/ais_gothenburg_20170705.zip` | 同上（同一文件，压缩版） | 官 | 2026-10-29 |
+
+原始文件的 SHA-256 记在报告第 2.1 节；`analysis/01_clean.py` 会打印读入行数与缺口数，可与报告核对。
+
 ## 目录
 
 ```
@@ -74,8 +83,9 @@ python analysis/03_congestion.py data/raw/reference_stops.csv
 │   └── 03_congestion.py
 ├── figures/               # 图与两张敏感性表，全部由脚本生成
 ├── narrative/
-│   ├── report.md          # 终稿正文（骨架，〔 〕处由本人补写）
+│   ├── report.md          # 终稿正文（10 页，无占位）
 │   ├── m1_proposal.md     # M1 选题书（两页）
+│   ├── m2_eda.md          # M2 检查点报告（由 report.md 抽取拼装）
 │   ├── key_numbers.md     # 03 自动生成的关键数字
 │   ├── data_log.md        # 分析决策日志（占总成绩 10%）
 │   ├── m3_checkin.md      # M3 当面检查的 8 分钟准备单
@@ -86,7 +96,9 @@ python analysis/03_congestion.py data/raw/reference_stops.csv
 │   ├── setup_windows.bat  # 一键装依赖 + 自检（新电脑先运行这个）
 │   ├── check_env.py       # 检查依赖是否齐全
 │   ├── build_report.py    # Markdown → Word → PDF
-│   └── build_slides.py    # 生成 M6 路演 PPTX（读 sensitivity.csv 与三张图）
+│   ├── build_m2.py        # 从 report.md 拼装 M2 检查点报告
+│   ├── build_slides.py    # 生成 M6 路演 PPTX（读 sensitivity.csv 与三张图）
+│   └── show_tree.py       # 打印目录树（M1 截图用）
 ├── build/                 # 导出的 docx/pdf/pptx（不进版本库）
 └── submissions/           # 各次提交的 PDF：m1_proposal.pdf、m2_eda.pdf、m4_draft.pdf、m6_final.pdf、m6_slides.pdf
 ```
@@ -106,7 +118,9 @@ python tools/build_report.py narrative/m1_proposal.md --out submissions/m1_propo
 ```
 
 生成同名 `.docx` 与 `.pdf`。PDF 转换用的是本机的 LibreOffice Kit；换到没有它的电脑时，
-加 `--no-pdf` 只生成 `.docx`，再用 Word 另存为 PDF。默认排版：A4、宋体小四、1.5 倍行距、首行缩进两字、
+加 `--no-pdf` 只生成 `.docx`，再用 Word 另存为 PDF。脚本开头的 `NODE` / `CLI` 是本机路径，
+换机器用环境变量 `LO_NODE` / `LO_CLI` 覆盖即可；`analysis/` 下的分析脚本没有任何绝对路径。
+默认排版：A4、宋体小四、1.5 倍行距、首行缩进两字、
 标题黑体、表格带框线且表头跨页重复、图注小五居中、页脚页码。
 想微调（字号、页边距、单位名称）改脚本开头的常量，或直接改 `.docx` 后另存为 PDF。
 
@@ -138,6 +152,18 @@ python tools/build_slides.py            # → build/m6_slides.pptx（6 页）
 3. **别用 Excel 打开再保存 `data/clean/` 里的 CSV**：会把 `2017-07-05 17:53:28` 改成
    `2017/7/5 17:53`（丢秒），浮点数也会被四舍五入。文件一旦被改过，就与脚本输出对不上，
    违反「中间文件必须由脚本生成」。不小心保存了，重跑 `python analysis/01_clean.py` 即可恢复。
+
+## 已知的问题
+
+这些限制在报告第 5 节逐条写成「因为……，所以不能回答……」，这里列成清单便于核对：
+
+- **只覆盖港区水域**，没有码头、泊位和锚地边界：`在港停留`是代理指标，不等于等泊时间；
+- **只有 2017-07-05 一天**：不能外推到季节、周内节律或长期趋势；
+- **日界截断**：10 次停留贴近日界、共 76.0 船·小时，只能视为当日观测下界；
+- **最短停留 30 分钟**：会漏掉渡轮、引航艇的短靠泊，主指标只覆盖油轮与货船；
+- **关闭 AIS 或采样中断的船不在数据里**：不能据此推断全港真实船舶总量；
+- **参数只在有限范围检验**：v0 0.2–1.0 节、tau 10–60 分钟、gap 10 分钟；
+- **工具依赖**：`tools/build_report.py` 依赖本机 LibreOffice Kit，路径可用 `LO_NODE` / `LO_CLI` 覆盖。
 
 ## 使用 AI 的说明
 

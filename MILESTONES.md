@@ -31,12 +31,16 @@
 - [x] M6 路演 PPTX 模板 `tools/build_slides.py` → `build/m6_slides.pptx`（6 页：正文 5 + 附页 1，含备注）
 - [x] 干净目录演练：删掉全部生成物后 01→02→03 通过（退出码 0），`stops.csv`、三张图、两张敏感性表、`key_numbers.md` 与主目录**逐字节一致**
 - [x] M2 专用附录：附录 A（对 M1 意见的回应）、附录 B（组内互评 1 记录）已并入 `report.md`
-- [ ] 本人补写：`m1_proposal.md` 的问题与「最不确定的地方」，`report.md` 的 1.1–1.2、2.3 末尾、3.3、4.1–4.4、5、6
+- [x] 报告正文换成完整初稿（10 页，无占位），`submissions/m4_draft.pdf` 已导出
+- [x] M2 检查点报告 `submissions/m2_eda.pdf`（9 页，回应置首）
+- [x] README 补齐「数据从哪里来」「已知的问题」，并注明工具路径可用 `LO_NODE`/`LO_CLI` 覆盖
+- [ ] M1 目录截图 PNG（`submissions/m1_directory.png`）与提交回执
 - [ ] 拿到教师给定的 3 次停留，跑 `python analysis/03_congestion.py <对照表>` 并记录误差
-- [ ] 确认 GitHub 仓库未登录可打开、截复现包目录图（M1）
-- [ ] 导出 M1 / M2 / M4 / M6 的 PDF 到 `submissions/`
-- [ ] 填 `narrative/ai_disclosure.md`
+- [ ] M2 提交回执（类别 M2、讲次 12、内容 `02_dream`）
+- [ ] M4 前请一位组外同学按 README 跑一遍
+- [ ] 填 `narrative/ai_disclosure.md`（本人填写）
 - [ ] M5：领 3 份别组初稿，按模板写优点与改进
+- [ ] M6：终稿与路演 PDF 归档、数据日志全册、十项自检
 
 ## M5 评阅的固定要求
 
