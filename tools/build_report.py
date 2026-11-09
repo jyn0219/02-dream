@@ -50,10 +50,10 @@ def set_font(run, east=BODY_EAST, ascii_=BODY_ASCII, size=None, bold=None):
         run.font.bold = bold
 
 
-def body_para(doc, text="", indent=True, align=None, space_after=6):
+def body_para(doc, text="", indent=True, align=None, space_after=5):
     p = doc.add_paragraph()
     pf = p.paragraph_format
-    pf.line_spacing = 1.5
+    pf.line_spacing = 1.3
     pf.space_after = Pt(space_after)
     if indent:
         pf.first_line_indent = Pt(24)          # 首行缩进两字（12pt × 2）
@@ -91,8 +91,8 @@ def add_inline(p, text, size=12):
 def heading(doc, text, level):
     p = doc.add_paragraph()
     pf = p.paragraph_format
-    pf.space_before = Pt(18 if level == 1 else 12)
-    pf.space_after = Pt(8 if level == 1 else 6)
+    pf.space_before = Pt(14 if level == 1 else 10)
+    pf.space_after = Pt(7 if level == 1 else 5)
     pf.keep_with_next = True
     if level == 1:
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -132,7 +132,7 @@ def add_table(doc, rows):
         cell.text = ""
         p = cell.paragraphs[0]
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        add_inline(p, header[i], size=9.5)
+        add_inline(p, header[i], size=9)
         for r in p.runs:
             r.font.bold = True
     for row in body:
@@ -140,9 +140,9 @@ def add_table(doc, rows):
         for i, val in enumerate(row[: len(header)]):
             cells[i].text = ""
             p = cells[i].paragraphs[0]
-            p.paragraph_format.line_spacing = 1.15
+            p.paragraph_format.line_spacing = 1.05
             p.paragraph_format.space_after = Pt(2)
-            add_inline(p, val, size=9.5)
+            add_inline(p, val, size=9)
     # 行不跨页断开
     for row in table.rows:
         tr_pr = row._tr.get_or_add_trPr()
@@ -182,8 +182,8 @@ def build(md_path: Path, out_path: Path) -> Path:
     doc = Document()
     sec = doc.sections[0]
     sec.page_width, sec.page_height = Cm(21), Cm(29.7)
-    sec.top_margin = sec.bottom_margin = Cm(2.54)
-    sec.left_margin = sec.right_margin = Cm(2.8)
+    sec.top_margin = sec.bottom_margin = Cm(2.2)
+    sec.left_margin = sec.right_margin = Cm(2.4)
     add_page_number(doc)
 
     i, n = 0, len(lines)
@@ -235,7 +235,7 @@ def build(md_path: Path, out_path: Path) -> Path:
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER
             p.paragraph_format.keep_with_next = True
             if img.exists():
-                p.add_run().add_picture(str(img))
+                p.add_run().add_picture(str(img), width=Cm(9))
             else:
                 p.add_run(f"[缺图：{src}]")
             i += 1
