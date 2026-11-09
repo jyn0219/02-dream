@@ -122,7 +122,26 @@ def add_table(doc, rows):
     table = doc.add_table(rows=1, cols=len(header))
     table.style = "Table Grid"
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
-    table.autofit = True
+    table.autofit = False
+    # 按内容长度分配列宽：长文本列给更多空间，避免窄列把行撑高
+    ncol = len(header)
+    weights = []
+    for j in range(ncol):
+        texts = [header[j]] + [(r[j] if j < len(r) else "") for r in body]
+        avg = sum(len(t) for t in texts) / max(1, len(texts))
+        weights.append(max(4.0, min(avg, 70.0)))
+    total = sum(weights)
+    avail = Cm(16.8)
+    widths = [int(avail * w / total) for w in weights]
+    # 缩小单元格内边距
+    tbl_pr = table._tbl.tblPr
+    mar = OxmlElement("w:tblCellMar")
+    for side, val in (("top", 30), ("left", 60), ("bottom", 30), ("right", 60)):
+        el = OxmlElement(f"w:{side}")
+        el.set(qn("w:w"), str(val))
+        el.set(qn("w:type"), "dxa")
+        mar.append(el)
+    tbl_pr.append(mar)
     # 表头跨页重复
     tr_pr = table.rows[0]._tr.get_or_add_trPr()
     tbl_header = OxmlElement("w:tblHeader")
@@ -130,6 +149,7 @@ def add_table(doc, rows):
     tr_pr.append(tbl_header)
     for i, cell in enumerate(table.rows[0].cells):
         cell.text = ""
+        cell.width = widths[i]
         p = cell.paragraphs[0]
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         add_inline(p, header[i], size=8.5)
@@ -139,6 +159,7 @@ def add_table(doc, rows):
         cells = table.add_row().cells
         for i, val in enumerate(row[: len(header)]):
             cells[i].text = ""
+            cells[i].width = widths[i]
             p = cells[i].paragraphs[0]
             p.paragraph_format.line_spacing = 1.05
             p.paragraph_format.space_after = Pt(2)
