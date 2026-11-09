@@ -38,9 +38,11 @@
 - [ ] 拿到教师给定的 3 次停留，跑 `python analysis/03_congestion.py <对照表>` 并记录误差
 - [ ] M2 提交回执（类别 M2、讲次 12、内容 `02_dream`）
 - [ ] M4 前请一位组外同学按 README 跑一遍
-- [ ] 填 `narrative/ai_disclosure.md`（本人填写）
+- [x] AI 使用披露表已填：`narrative/ai_disclosure.md`，并作为附录 C 附在终稿末尾
+- [x] 终稿 `submissions/m6_final.pdf`、路演 `submissions/m6_slides.pdf` 已归档
+- [x] 对话记录导出 `submissions/ai_dialog.pdf`（50 轮）
 - [x] M5：决定放弃（个人作业 10 分不计；如改变主意，截止前仍可补交）
-- [ ] M6：终稿与路演 PDF 归档、数据日志全册、十项自检
+- [ ] 数据日志全册、十项自检、路演排练
 
 ## M5 评阅的固定要求
 
