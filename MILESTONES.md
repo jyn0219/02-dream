@@ -28,7 +28,7 @@
 - [x] M1 选题书骨架 `narrative/m1_proposal.md`，导出的 PDF 正好两页（已验证）
 - [x] 排版工具 `tools/build_report.py`：Markdown → Word → PDF，A4/宋体小四/1.5 倍行距/图注/页码
 - [x] 组号与组名定了：02 / dream，文件夹 `02_dream`；提交走 GitHub
-- [x] M6 路演 PPTX 模板 `tools/build_slides.py` → `build/m6_slides.pptx`（6 页：正文 5 + 附页 1，含备注）
+- [x] M6 路演 PPT 定稿（6 页：正文 5 + 附页 1，含逐页讲稿与计时）→ `submissions/m6_slides.pdf`
 - [x] 干净目录演练：删掉全部生成物后 01→02→03 通过（退出码 0），`stops.csv`、三张图、两张敏感性表、`key_numbers.md` 与主目录**逐字节一致**
 - [x] M2 专用附录：附录 A（对 M1 意见的回应）、附录 B（组内互评 1 记录）已并入 `report.md`
 - [x] 报告正文换成完整初稿（10 页，无占位），`submissions/m4_draft.pdf` 已导出
