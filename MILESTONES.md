@@ -12,7 +12,7 @@
 | M2 数据与探索 | 第 12 讲课后 48 小时 | `m2_eda.pdf` + 仓库链接 | 报告第 2–5 节 + 附录 A、B、三张图、`key_numbers.md` | ☐ |
 | M3 当面检查 | 第 13 讲起一周内预约 | 不交文件，带四样材料 | `narrative/m3_checkin.md`、`figures/main.png`、两张敏感性表 | ☐ |
 | M4 初稿与代码 | 第 14 讲课后 72 小时，不延期 | `m4_draft.pdf` + 仓库链接 | 报告第 1–6 节，空缺标〔待补〕 | ☐ |
-| M5 外部互评 | 第 15 讲课后一周 | 3 份评阅 PDF，每份 ≥12 条 | `narrative/m5_review_template.md` | ☐ |
+| M5 外部互评 | 第 15 讲课后一周 | 3 份评阅 PDF，每份 ≥12 条 | `narrative/m5_review_template.md` | ✗ 决定不做（个人作业，10 分不计） |
 | M6 终稿与路演 | 路演第 16 讲；终稿结课后一周 | `m6_final.pdf`、`m6_slides.pdf`、仓库链接、数据日志全册 | 报告全文 + `slides_outline.md` + `data_log.md` | ☐ |
 
 ## 现在到哪一步
@@ -39,7 +39,7 @@
 - [ ] M2 提交回执（类别 M2、讲次 12、内容 `02_dream`）
 - [ ] M4 前请一位组外同学按 README 跑一遍
 - [ ] 填 `narrative/ai_disclosure.md`（本人填写）
-- [ ] M5：领 3 份别组初稿，按模板写优点与改进
+- [x] M5：决定放弃（个人作业 10 分不计；如改变主意，截止前仍可补交）
 - [ ] M6：终稿与路演 PDF 归档、数据日志全册、十项自检
 
 ## M5 评阅的固定要求
