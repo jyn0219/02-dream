@@ -7,9 +7,13 @@
 数据：丹麦海事局（DMA）AIS 开放数据（官），经 movingpandas-examples 整理为课程样本包；
 84,702 行、100 艘船、8 个字段。免费使用，须署名。
 
-**提交方式**：代码与文档在 GitHub —— <https://github.com/jyn0219/02-dream>（Public，未登录可浏览）。
-每完成一个里程碑 push 一次，提交表单里填这个地址；助教按下面的三条命令即可从头运行。
-网盘可作为备份，但不是必需。`data/raw/` 里已带原始数据，不需要另外下载。
+**提交方式**：两个地址都提供，内容相同——
+
+- GitHub：<https://github.com/jyn0219/02-dream>（Public，未登录可浏览）
+- 百度网盘：<https://pan.baidu.com/s/1WxaMt8N6uSU3-MNC3MpNjA?pwd=j54x>（提取码 `j54x`）
+
+每完成一个里程碑 push 一次并更新网盘；提交表单里两个地址都填。助教按下面的三条命令即可从头运行。
+`data/raw/` 里已带原始数据，不需要另外下载。
 
 ## 快速开始（新电脑 / 教室电脑）
 

@@ -7,7 +7,7 @@
 | 组号 / 组名 | 02 / dream（文件夹 `02_dream`） |
 | 轨道 | B 轨，任务包 B1「港口停留与拥堵」 |
 | 组员与分工 | 王国梁（组长，搜集资料、制作内容、汇报展示）、景亚宁（图表、数据与清洗） |
-| 复现包 | <https://github.com/jyn0219/02-dream>（Public，未登录可打开） |
+| 复现包 | GitHub：github.com/jyn0219/02-dream；网盘：pan.baidu.com/s/1WxaMt8N6uSU3-MNC3MpNjA（提取码 j54x） |
 
 ## 一、问题
 

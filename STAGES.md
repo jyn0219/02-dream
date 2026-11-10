@@ -5,8 +5,8 @@
 
 ## 一、本包怎么用
 
-1. 复现包仓库：<https://github.com/jyn0219/02-dream>（Public，未登录可打开）。
-   传网盘时也可以整个 `02_dream/` 文件夹上传，链接设成「有链接即可查看」。
+1. 复现包两个地址：GitHub <https://github.com/jyn0219/02-dream>（Public，未登录可打开）；
+   百度网盘 <https://pan.baidu.com/s/1WxaMt8N6uSU3-MNC3MpNjA?pwd=j54x>（提取码 j54x）。
 2. 助教拿到后按 `README.md` 的三条命令即可从头跑：
    `python analysis/01_clean.py` → `02_explore.py` → `03_congestion.py`。
 3. `data/raw/` 里已带原始 AIS，不需要另外下载。

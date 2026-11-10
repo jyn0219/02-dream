@@ -169,7 +169,7 @@ def add_table(doc, rows):
         tr_pr = row._tr.get_or_add_trPr()
         cant = OxmlElement("w:cantSplit")
         tr_pr.append(cant)
-    doc.add_paragraph().paragraph_format.space_after = Pt(2)
+    # 不再在表后加空段落：文末是表格时，空段落会把内容顶出一页空白页
 
 
 def add_page_number(doc):
